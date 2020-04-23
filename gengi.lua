@@ -76,13 +76,10 @@ my_screens = { -- used to generate the game table
 }
 
 -- global funcs and their values (and a logging thing)
+-- TODO: make these part of the freshmaker table instance
 screen_dirty = true
-
 last_return = ""
-logg = function(str)
-  print(str) 
-  last_return = str
-end
+logg = function(str) print(str); last_return = str end
 
 function init() 
   my_game = g.new(my_screens)  
