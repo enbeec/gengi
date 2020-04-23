@@ -13,9 +13,7 @@
 --
 -- unimplemented stuff is logged
 --  in the repl and on screen :)
---
--- uncomment code in init()...
---  for a richer example.
+
 
 -- includes
 util = require 'util'
@@ -30,7 +28,6 @@ my_freshmaker,my_idle = {},{} -- timing and drawing, etc
 my_screens = { -- used to generate the game table
   {
     name = "title",
-    -- see my_title() for a detailed implementation
     enc = function(self,n,d) end,
     key = function(self,n,z) 
       local logg = logg or print
@@ -51,7 +48,6 @@ my_screens = { -- used to generate the game table
     end,
   },{
     name = "menu",
-    -- see my_menu() for an example implementation of these
     enc = function(self,n,d) 
       if d > 0 then logg("scroll up")   
       else logg("scroll down")
@@ -89,9 +85,6 @@ logg = function(str)
 end
 
 function init() 
-  -- my_screens[1] = my_title(my_screens[1]) -- UNCOMMENT TO ENABLE ASSETS FOUND BELOW
-  -- my_screens[2] = my_menu(my_screens[2]) -- UNCOMMENT TO ENABLE ASSETS FOUND BELOW
-  
   my_game = g.new(my_screens)  
   
   my_idle = freshmaker.newIdle(1200) -- frames to wait until going idle
@@ -157,45 +150,4 @@ function key(n,z)
   else -- K2/K3 depend on game state
     my_game.screen[my_game.screen.selected]:key(n,z)
   end
-end
-
--- -------------- -----------------------------------------------------------------
--- EXAMPLE ASSETS -----------------------------------------------------------------
--- assets = include('lib/assets') -- best to keep your screens in another file-----
--- ----------> TITLE ----------------------------------------------------
-function my_title(t,game_table)
-  local t = t or {}
-  t.enc = function(self,n,d) end
-  t.key = function(self,n,z) end
-  t.event = function(self,bool) end
-  t.draw = function(self) 
-    screen.move(20,20); screen.text("> start game")
-    screen.move(20,28); screen.text("< quit")
-  end
-  return t
-end
-
--- ----------> MENU -----------------------------------------------------
-function my_menu(m,game_table)
-  local m = m or {}
-  m.menu_selected = 1 -- we only have one for now anyway
-  m.menus = {
-    {
-      some="description of menu option named: some",
-      options="description of menu option named: options",
-      here="description of menu option named: here"
-    },
-  }
-  m.actions = setmetatable( -- if you're confused, note that
-                            --  setmetatable() takes two tables as args
-    {
-      some=function() end,
-      options=function() end
-    },{ -- ^actions^ v-metatable-v
-      __index = function(t,k)
-        print("no function named: "..k.." in action table: "..t)
-      end
-    }
-  )
-  return m
 end
