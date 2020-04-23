@@ -1,6 +1,6 @@
 -- gengi
 -- vcvcvc_val
--- [lines thread]
+-- llllllll.co/t/gengi-norns-game-framework
 -- 
 -- (pronounced:
 --   'gaen-ghee')
